@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - LNC TECHNOLOGIE</title>
+    <style>
+        :root {
+            --primary: #0047AB;
+            --primary-light: #3F75D5;
+            --primary-dark: #00347D;
+            --accent: #00A3E0;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333333;
+            
+            /* Dark mode variables */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f5f7fa;
+            --header-bg: var(--primary);
+            --footer-bg: var(--primary-dark);
+            --section-bg: #ffffff;
+            --section-alt-bg: #f5f7fa;
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --header-bg: #001a3d;
+            --footer-bg: #000d1f;
+            --section-bg: #121212;
+            --section-alt-bg: #1e1e1e;
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .nav-container {
+            direction: rtl;
+        }
+        
+        [dir="rtl"] .nav-menu li {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .theme-toggle {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+        
+        [dir="rtl"] .section-header h2::after,
+        [dir="rtl"] .timeline-item::before {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .stats-grid .stat-item {
+            text-align: center;
+        }
+        
+        [dir="rtl"] .value-item {
+            text-align: center;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Arabic font support */
+        [lang="ar"], [lang="ar"] * {
+            font-family: 'Segoe UI', 'Arial Unicode MS', 'Tahoma', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            background-color: var(--header-bg);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background-color: rgba(0, 26, 61, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.7rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+        
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--white);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+        
+        .nav-menu a.active {
+            color: var(--accent);
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            margin-left: 1rem;
+        }
+        
+        .lang-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-width: 120px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lang-option:hover {
+            background: var(--light-gray);
+        }
+        
+        .lang-option.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .lang-option:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .lang-option:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+        }
+        
+        /* Page Hero */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 6rem 0 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 600"><rect width="1400" height="600" fill="%23004080"/><circle cx="200" cy="150" r="40" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="300" r="60" fill="rgba(255,255,255,0.05)"/><circle cx="1200" cy="450" r="50" fill="rgba(255,255,255,0.08)"/></svg>') center/cover;
+            opacity: 0.1;
+        }
+        
+        .page-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .page-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            background-color: var(--section-alt-bg);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .breadcrumb nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--primary-dark);
+        }
+        
+        .breadcrumb span {
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        /* About Sections */
+        .about-intro {
+            padding: 5rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .intro-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .intro-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .intro-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .intro-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .intro-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Mission & Vision */
+        .mission-vision {
+            padding: 5rem 0;
+            background-color: var(--section-alt-bg);
+        }
+        
+        .mission-vision-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .mission-card, .vision-card {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .mission-card:hover, .vision-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mission-card::before, .vision-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .mission-card i, .vision-card i {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-card h3, .vision-card h3 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .mission-card p, .vision-card p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        
+        /* Values Section */
+        .values-section {
+            padding: 5rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            max-width: 600px;
+            margin: 1rem auto 0;
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .value-item {
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .value-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-item i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .value-item:hover i {
+            transform: scale(1.1);
+        }
+        
+        .value-item h3 {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .value-item p {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 5rem 0;
+            background-color: var(--section-alt-bg);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+            padding: 0 2rem;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 4px solid var(--white);
+            box-shadow: 0 0 0 4px var(--primary);
+        }
+        
+        .timeline-item:nth-child(odd)::before {
+            right: -11px;
+        }
+        
+        .timeline-item:nth-child(even)::before {
+            left: -11px;
+        }
+        
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -20px;
+            border-left-color: var(--card-bg);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -20px;
+            border-right-color: var(--card-bg);
+        }
+        
+        .timeline-year {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .timeline-content p {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .stat-item i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .stat-item p {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        /* Team Preview */
+        .team-preview {
+            padding: 5rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .team-image {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .team-image i {
+            font-size: 5rem;
+            color: var(--white);
+            opacity: 0.8;
+        }
+        
+        .team-info {
+            padding: 2rem 1.5rem;
+        }
+        
+        .team-info h3 {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-info .role {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .team-info .bio {
+            color: var(--text-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            margin: 0 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+        }
+        
+        .social-icons {
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--header-bg);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1rem 0;
+            }
+            
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .intro-grid,
+            .mission-vision-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .values-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                text-align: left !important;
+                left: 0 !important;
+            }
+            
+            .timeline-item::before {
+                left: 10px !important;
+            }
+            
+            .timeline-content::after {
+                left: -20px !important;
+                border-right-color: var(--card-bg) !important;
+                border-left-color: transparent !important;
+            }
+            
+            .language-switcher {
+                margin-left: 0.5rem;
+            }
+            
+            .theme-toggle {
+                margin-left: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .page-hero {
+                padding: 4rem 0 2rem;
+            }
+            
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-content h2,
+            .section-header h2,
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+            
+            .mission-card,
+            .vision-card,
+            .value-item {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">LNC<span>TECH</span></a>
+                <nav>
+                    <ul class="nav-menu" id="nav-menu">
+                        <li><a data-translate="home" href="index.html">Home</a></li>
+                        <li><a data-translate="services" href="index.html#services">Services</a></li>
+                        <li><a data-translate="about" href="about.html" class="active">About</a></li>
+                        <li><a data-translate="examples" href="portfolio.html">Examples</a></li>
+                        <li><a data-translate="team" href="index.html#team">Team</a></li>
+                        <li><a data-translate="testimonials" href="index.html#testimonials">Testimonials</a></li>
+                        <li><a data-translate="contact" href="index.html#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="language-switcher">
+                    <div class="lang-button" onclick="toggleLanguageDropdown()">
+                        <span id="current-lang">🇺🇸 EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <div class="lang-option" onclick="changeLanguage('en')">
+                            <span>🇺🇸</span> English
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('fr')">
+                            <span>🇫🇷</span> Français
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('ar')">
+                            <span>🇩🇿</span> العربية
+                        </div>
+                    </div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <div class="page-hero-content">
+                    <h1 data-translate="about_us_title">About LNC TECHNOLOGIE</h1>
+                    <p data-translate="about_us_subtitle">Discover our story, mission, and the passionate team behind innovative digital solutions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Breadcrumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <nav>
+                    <a href="index.html" data-translate="home">Home</a>
+                    <span>></span>
+                    <span data-translate="about_us">About Us</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- About Introduction -->
+        <section class="about-intro">
+            <div class="container">
+                <div class="intro-grid">
+                    <div class="intro-content">
+                        <h2 data-translate="our_story_title">Our Story</h2>
+                        <p data-translate="story_p1">Founded with a vision to bridge the gap between innovative technology and practical business solutions, LNC TECHNOLOGIE has been at the forefront of digital transformation since our inception.</p>
+                        <p data-translate="story_p2">We started as a small team of passionate developers and designers who believed that every business, regardless of size, deserves access to cutting-edge technology solutions. Today, we've grown into a comprehensive digital agency that serves clients across various industries.</p>
+                        <p data-translate="story_p3">Our journey has been driven by one simple principle: creating digital experiences that not only meet our clients' needs but exceed their expectations and drive real business growth.</p>
+                    </div>
+                    <div class="intro-image">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23f0f8ff'/><rect x='50' y='50' width='700' height='500' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><circle cx='150' cy='150' r='30' fill='%230047AB'/><circle cx='300' cy='150' r='30' fill='%233F75D5'/><circle cx='450' cy='150' r='30' fill='%2300A3E0'/><rect x='100' y='250' width='600' height='20' fill='%23f0f0f0'/><rect x='100' y='290' width='400' height='20' fill='%23f0f0f0'/><rect x='100' y='330' width='500' height='20' fill='%23f0f0f0'/><rect x='100' y='370' width='350' height='20' fill='%23f0f0f0'/><rect x='550' y='250' width='150' height='140' fill='%230047AB' opacity='0.1'/><text x='400' y='520' font-family='Arial' font-size='24' fill='%230047AB' text-anchor='middle'>Digital Innovation</text></svg>" alt="Our Story" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="mission-vision">
+            <div class="container">
+                <div class="mission-vision-grid">
+                    <div class="mission-card">
+                        <i class="fas fa-bullseye"></i>
+                        <h3 data-translate="our_mission">Our Mission</h3>
+                        <p data-translate="mission_text">To empower businesses with innovative digital solutions that drive growth, enhance user experiences, and create lasting competitive advantages in the digital marketplace.</p>
+                    </div>
+                    <div class="vision-card">
+                        <i class="fas fa-eye"></i>
+                        <h3 data-translate="our_vision">Our Vision</h3>
+                        <p data-translate="vision_text">To be the leading digital transformation partner, recognized for delivering exceptional results and pioneering the future of web and mobile technologies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="values-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-translate="our_values">Our Core Values</h2>
+                    <p data-translate="values_description">The principles that guide everything we do and define who we are as a company</p>
+                </div>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3 data-translate="innovation">Innovation</h3>
+                        <p data-translate="innovation_desc">We constantly push boundaries and embrace new technologies to deliver cutting-edge solutions that keep our clients ahead of the curve.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-star"></i>
+                        <h3 data-translate="excellence">Excellence</h3>
+                        <p data-translate="excellence_desc">We maintain the highest standards in everything we do, from code quality to customer service, ensuring exceptional results every time.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-handshake"></i>
+                        <h3 data-translate="collaboration">Collaboration</h3>
+                        <p data-translate="collaboration_desc">We believe in working closely with our clients as partners, fostering open communication and shared success.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3 data-translate="reliability">Reliability</h3>
+                        <p data-translate="reliability_desc">Our clients trust us to deliver on time, within budget, and with the quality they expect. We never compromise on our commitments.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-rocket"></i>
+                        <h3 data-translate="growth">Growth</h3>
+                        <p data-translate="growth_desc">We're committed to continuous learning and improvement, both for our team and our clients' businesses.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-heart"></i>
+                        <h3 data-translate="passion">Passion</h3>
+                        <p data-translate="passion_desc">We love what we do, and this passion drives us to create exceptional digital experiences that make a real difference.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-translate="our_journey">Our Journey</h2>
+                    <p data-translate="journey_description">Key milestones that have shaped our company's growth and success</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year" data-translate="year_2020">2020</div>
+                            <h4 data-translate="founding">Company Founded</h4>
+                            <p data-translate="founding_desc">LNC TECHNOLOGIE was established with a vision to provide innovative web and mobile solutions to businesses of all sizes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year" data-translate="year_2021">2021</div>
+                            <h4 data-translate="first_major_client">First Major Client</h4>
+                            <p data-translate="first_client_desc">Successfully delivered our first enterprise-level project, establishing our reputation for quality and reliability in the market.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year" data-translate="year_2022">2022</div>
+                            <h4 data-translate="team_expansion">Team Expansion</h4>
+                            <p data-translate="team_expansion_desc">Doubled our team size and expanded our service offerings to include cloud solutions and digital marketing.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year" data-translate="year_2023">2023</div>
+                            <h4 data-translate="international_reach">International Reach</h4>
+                            <p data-translate="international_desc">Expanded our services internationally, working with clients across multiple countries and time zones.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year" data-translate="year_2024">2024</div>
+                            <h4 data-translate="innovation_lab">Innovation Lab</h4>
+                            <p data-translate="innovation_lab_desc">Launched our innovation lab focusing on AI integration and emerging technologies to stay ahead of industry trends.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3 data-count="150">0</h3>
+                        <p data-translate="projects_completed">Projects Completed</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <h3 data-count="100">0</h3>
+                        <p data-translate="happy_clients">Happy Clients</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <h3 data-count="5">0</h3>
+                        <p data-translate="years_experience">Years Experience</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-award"></i>
+                        <h3 data-count="15">0</h3>
+                        <p data-translate="awards_won">Awards Won</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Preview -->
+        <section class="team-preview">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-translate="meet_our_team">Meet Our Team</h2>
+                    <p data-translate="team_description">The talented professionals who make our success possible</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="team-info">
+                            <h3 data-translate="ceo_name">NADEM BENBOU3ZIZE</h3>
+                            <div class="role" data-translate="ceo_title">Digital Marketer & Founder</div>
+                            <div class="bio" data-translate="ceo_bio">Visionary leader with over 5 years of experience in digital marketing and business development. Passionate about helping businesses grow through innovative digital strategies.</div>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="team-info">
+                            <h3 data-translate="cto_name">YOUB LOUAI</h3>
+                            <div class="role" data-translate="cto_title">Frontend Developer</div>
+                            <div class="bio" data-translate="cto_bio">Creative frontend developer specializing in modern web technologies and user experience design. Expert in React, Vue.js, and responsive design principles.</div>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/louai-youb-a77885371/"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://x.com/LouaiYoub1411"><i class="fab fa-twitter"></i></a>
+                                <a href="https://github.com/louaiyoub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="team-info">
+                            <h3 data-translate="designer_name">ABDELATIF YOUB</h3>
+                            <div class="role" data-translate="designer_title">Backend Developer</div>
+                            <div class="bio" data-translate="designer_bio">Experienced backend developer with expertise in server-side technologies, database design, and API development. Passionate about building scalable and secure solutions.</div>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 data-translate="ready_to_work">Ready to Work With Us?</h2>
+                    <p data-translate="cta_description">Let's discuss how we can help bring your digital vision to life with our expertise and passion for innovation.</p>
+                    <a href="index.html#contact" class="btn" data-translate="start_project">Start Your Project</a>
+                    <a href="portfolio.html" class="btn btn-outline" data-translate="view_portfolio">View Our Work</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-translate="company">Company</h3>
+                    <ul>
+                        <li><a href="about.html" data-translate="about">About Us</a></li>
+                        <li><a href="index.html#services" data-translate="services">Services</a></li>
+                        <li><a href="index.html#team" data-translate="team">Team</a></li>
+                        <li><a href="index.html#contact" data-translate="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-translate="services">Services</h3>
+                    <ul>
+                        <li><a href="#" data-translate="web_development">Web Development</a></li>
+                        <li><a href="#" data-translate="mobile_apps">Mobile Apps</a></li>
+                        <li><a href="#" data-translate="ui_ux_design">UI/UX Design</a></li>
+                        <li><a href="#" data-translate="ecommerce">E-Commerce</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-translate="support">Support</h3>
+                    <ul>
+                        <li><a href="#" data-translate="help_center">Help Center</a></li>
+                        <li><a href="#" data-translate="documentation">Documentation</a></li>
+                        <li><a href="#" data-translate="privacy_policy">Privacy Policy</a></li>
+                        <li><a href="#" data-translate="terms_service">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-translate="connect">Connect</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LNC TECHNOLOGIE. <span data-translate="all_rights_reserved">All rights reserved.</span></p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                home: "Home",
+                services: "Services",
+                about: "About Us",
+                examples: "Examples",
+                team: "Team",
+                testimonials: "Testimonials",
+                contact: "Contact",
+                about_us: "About Us",
+                about_us_title: "About LNC TECHNOLOGIE",
+                about_us_subtitle: "Discover our story, mission, and the passionate team behind innovative digital solutions",
+                our_story_title: "Our Story",
+                story_p1: "Founded with a vision to bridge the gap between innovative technology and practical business solutions, LNC TECHNOLOGIE has been at the forefront of digital transformation since our inception.",
+                story_p2: "We started as a small team of passionate developers and designers who believed that every business, regardless of size, deserves access to cutting-edge technology solutions. Today, we've grown into a comprehensive digital agency that serves clients across various industries.",
+                story_p3: "Our journey has been driven by one simple principle: creating digital experiences that not only meet our clients' needs but exceed their expectations and drive real business growth.",
+                our_mission: "Our Mission",
+                mission_text: "To empower businesses with innovative digital solutions that drive growth, enhance user experiences, and create lasting competitive advantages in the digital marketplace.",
+                our_vision: "Our Vision",
+                vision_text: "To be the leading digital transformation partner, recognized for delivering exceptional results and pioneering the future of web and mobile technologies.",
+                our_values: "Our Core Values",
+                values_description: "The principles that guide everything we do and define who we are as a company",
+                innovation: "Innovation",
+                innovation_desc: "We constantly push boundaries and embrace new technologies to deliver cutting-edge solutions that keep our clients ahead of the curve.",
+                excellence: "Excellence",
+                excellence_desc: "We maintain the highest standards in everything we do, from code quality to customer service, ensuring exceptional results every time.",
+                collaboration: "Collaboration",
+                collaboration_desc: "We believe in working closely with our clients as partners, fostering open communication and shared success.",
+                reliability: "Reliability",
+                reliability_desc: "Our clients trust us to deliver on time, within budget, and with the quality they expect. We never compromise on our commitments.",
+                growth: "Growth",
+                growth_desc: "We're committed to continuous learning and improvement, both for our team and our clients' businesses.",
+                passion: "Passion",
+                passion_desc: "We love what we do, and this passion drives us to create exceptional digital experiences that make a real difference.",
+                our_journey: "Our Journey",
+                journey_description: "Key milestones that have shaped our company's growth and success",
+                year_2020: "2020",
+                founding: "Company Founded",
+                founding_desc: "LNC TECHNOLOGIE was established with a vision to provide innovative web and mobile solutions to businesses of all sizes.",
+                year_2021: "2021",
+                first_major_client: "First Major Client",
+                first_client_desc: "Successfully delivered our first enterprise-level project, establishing our reputation for quality and reliability in the market.",
+                year_2022: "2022",
+                team_expansion: "Team Expansion",
+                team_expansion_desc: "Doubled our team size and expanded our service offerings to include cloud solutions and digital marketing.",
+                year_2023: "2023",
+                international_reach: "International Reach",
+                international_desc: "Expanded our services internationally, working with clients across multiple countries and time zones.",
+                year_2024: "2024",
+                innovation_lab: "Innovation Lab",
+                innovation_lab_desc: "Launched our innovation lab focusing on AI integration and emerging technologies to stay ahead of industry trends.",
+                projects_completed: "Projects Completed",
+                happy_clients: "Happy Clients",
+                years_experience: "Years Experience",
+                awards_won: "Awards Won",
+                meet_our_team: "Meet Our Team",
+                team_description: "The talented professionals who make our success possible",
+                ceo_name: "NADEM BENBOU3ZIZE",
+                ceo_title: "Digital Marketer & Founder",
+                ceo_bio: "Visionary leader with over 5 years of experience in digital marketing and business development. Passionate about helping businesses grow through innovative digital strategies.",
+                cto_name: "YOUB LOUAI",
+                cto_title: "Frontend Developer",
+                cto_bio: "Creative frontend developer specializing in modern web technologies and user experience design. Expert in React, Vue.js, and responsive design principles.",
+                designer_name: "ABDELATIF YOUB",
+                designer_title: "Backend Developer",
+                designer_bio: "Experienced backend developer with expertise in server-side technologies, database design, and API development. Passionate about building scalable and secure solutions.",
+                ready_to_work: "Ready to Work With Us?",
+                cta_description: "Let's discuss how we can help bring your digital vision to life with our expertise and passion for innovation.",
+                start_project: "Start Your Project",
+                view_portfolio: "View Our Work",
+                web_development: "Web Development",
+                mobile_apps: "Mobile Apps",
+                ui_ux_design: "UI/UX Design",
+                ecommerce: "E-Commerce",
+                company: "Company",
+                support: "Support",
+                connect: "Connect",
+                help_center: "Help Center",
+                documentation: "Documentation",
+                privacy_policy: "Privacy Policy",
+                terms_service: "Terms of Service",
+                all_rights_reserved: "All rights reserved."
+            },
+            fr: {
+                home: "Accueil",
+                services: "Services",
+                about: "À propos",
+                examples: "Exemples",
+                team: "Équipe",
+                testimonials: "Témoignages",
+                contact: "Contact",
+                about_us: "À propos de nous",
+                about_us_title: "À propos de LNC TECHNOLOGIE",
+                about_us_subtitle: "Découvrez notre histoire, notre mission et l'équipe passionnée derrière des solutions numériques innovantes",
+                our_story_title: "Notre Histoire",
+                story_p1: "Fondée avec la vision de combler le fossé entre la technologie innovante and les solutions commerciales pratiques, LNC TECHNOLOGIE est à la pointe de la transformation numérique depuis notre création.",
+                story_p2: "Nous avons commencé comme une petite équipe de développeurs et designers passionnés qui croyaient que chaque entreprise, quelle que soit sa taille, mérite l'accès aux solutions technologiques de pointe. Aujourd'hui, nous sommes devenus une agence numérique complète qui sert des clients dans diverses industries.",
+                story_p3: "Notre parcours a été guidé par un principe simple : créer des expériences numériques qui non seulement répondent aux besoins de nos clients mais dépassent leurs attentes et stimulent une réelle croissance commerciale.",
+                our_mission: "Notre Mission",
+                mission_text: "Autonomiser les entreprises avec des solutions numériques innovantes qui stimulent la croissance, améliorent les expériences utilisateur et créent des avantages concurrentiels durables sur le marché numérique.",
+                our_vision: "Notre Vision",
+                vision_text: "Être le partenaire leader en transformation numérique, reconnu pour livrer des résultats exceptionnels et pionnier de l'avenir des technologies web et mobiles.",
+                our_values: "Nos Valeurs Fondamentales",
+                values_description: "Les principes qui guident tout ce que nous faisons et définissent qui nous sommes en tant qu'entreprise",
+                innovation: "Innovation",
+                innovation_desc: "Nous repoussons constamment les limites et adoptons de nouvelles technologies pour livrer des solutions de pointe qui maintiennent nos clients en avance sur la courbe.",
+                excellence: "Excellence",
+                excellence_desc: "Nous maintenons les plus hauts standards dans tout ce que nous faisons, de la qualité du code au service client, assurant des résultats exceptionnels à chaque fois.",
+                collaboration: "Collaboration",
+                collaboration_desc: "Nous croyons en travaillant étroitement avec nos clients comme partenaires, favorisant une communication ouverte et un succès partagé.",
+                reliability: "Fiabilité",
+                reliability_desc: "Nos clients nous font confiance pour livrer à temps, dans le budget, et avec la qualité qu'ils attendent. Nous ne compromettrons jamais nos engagements.",
+                growth: "Croissance",
+                growth_desc: "Nous nous engageons à l'apprentissage continu et à l'amélioration, tant pour notre équipe que pour les entreprises de nos clients.",
+                passion: "Passion",
+                passion_desc: "Nous aimons ce que nous faisons, et cette passion nous pousse à créer des expériences numériques exceptionnelles qui font une vraie différence.",
+                our_journey: "Notre Parcours",
+                journey_description: "Les étapes clés qui ont façonné la croissance et le succès de notre entreprise",
+                year_2020: "2020",
+                founding: "Fondation de l'Entreprise",
+                founding_desc: "LNC TECHNOLOGIE a été établie avec une vision de fournir des solutions web et mobiles innovantes aux entreprises de toutes tailles.",
+                year_2021: "2021",
+                first_major_client: "Premier Client Majeur",
+                first_client_desc: "Livraison réussie de notre premier projet au niveau entreprise, établissant notre réputation pour la qualité et la fiabilité sur le marché.",
+                year_2022: "2022",
+                team_expansion: "Expansion de l'Équipe",
+                team_expansion_desc: "Doublé la taille de notre équipe et élargi nos offres de services pour inclure les solutions cloud et le marketing numérique.",
+                year_2023: "2023",
+                international_reach: "Portée Internationale",
+                international_desc: "Élargi nos services à l'international, travaillant avec des clients à travers plusieurs pays et fuseaux horaires.",
+                year_2024: "2024",
+                innovation_lab: "Laboratoire d'Innovation",
+                innovation_lab_desc: "Lancé notre laboratoire d'innovation axé sur l'intégration IA et les technologies émergentes pour rester en avance sur les tendances de l'industrie.",
+                projects_completed: "Projets Terminés",
+                happy_clients: "Clients Satisfaits",
+                years_experience: "Années d'Expérience",
+                awards_won: "Prix Remportés",
+                meet_our_team: "Rencontrez Notre Équipe",
+                team_description: "Les professionnels talentueux qui rendent notre succès possible",
+                ceo_name: "NADEM BENBOU3ZIZE",
+                ceo_title: "Marketeur Digital & Fondateur",
+                ceo_bio: "Leader visionnaire avec plus de 5 ans d'expérience en marketing digital et développement commercial. Passionné d'aider les entreprises à grandir grâce à des stratégies numériques innovantes.",
+                cto_name: "YOUB LOUAI",
+                cto_title: "Développeur Frontend",
+                cto_bio: "Développeur frontend créatif spécialisé dans les technologies web modernes et la conception d'expérience utilisateur. Expert en React, Vue.js et principes de design responsive.",
+                designer_name: "ABDELATIF YOUB",
+                designer_title: "Développeur Backend",
+                designer_bio: "Développeur backend expérimenté avec expertise en technologies côté serveur, conception de base de données et développement d'API. Passionné de construire des solutions évolutives et sécurisées.",
+                ready_to_work: "Prêt à Travailler Avec Nous?",
+                cta_description: "Discutons de la façon dont nous pouvons aider à donner vie à votre vision numérique avec notre expertise et notre passion pour l'innovation.",
+                start_project: "Commencer Votre Projet",
+                view_portfolio: "Voir Notre Travail",
+                web_development: "Développement Web",
+                mobile_apps: "Applications Mobiles",
+                ui_ux_design: "Design UI/UX",
+                ecommerce: "E-Commerce",
+                company: "Entreprise",
+                support: "Support",
+                connect: "Se Connecter",
+                help_center: "Centre d'Aide",
+                documentation: "Documentation",
+                privacy_policy: "Politique de Confidentialité",
+                terms_service: "Conditions d'Utilisation",
+                all_rights_reserved: "Tous droits réservés."
+            },
+            ar: {
+                home: "الرئيسية",
+                services: "الخدمات",
+                about: "من نحن",
+                examples: "أمثلة",
+                team: "الفريق",
+                testimonials: "الشهادات",
+                contact: "اتصل",
+                about_us: "من نحن",
+                about_us_title: "حول LNC TECHNOLOGIE",
+                about_us_subtitle: "اكتشف قصتنا ورسالتنا والفريق الشغوف وراء الحلول الرقمية المبتكرة",
+                our_story_title: "قصتنا",
+                story_p1: "تأسست برؤية لسد الفجوة بين التكنولوجيا المبتكرة والحلول التجارية العملية، كانت LNC TECHNOLOGIE في المقدمة للتحول الرقمي منذ إنشائنا.",
+                story_p2: "بدأنا كفريق صغير من المطورين والمصممين الشغوفين الذين آمنوا بأن كل شركة، بغض النظر عن حجمها، تستحق الوصول إلى حلول التكنولوجيا المتطورة. اليوم، نمونا لنصبح وكالة رقمية شاملة تخدم العملاء عبر صناعات متنوعة.",
+                story_p3: "رحلتنا كانت مدفوعة بمبدأ واحد بسيط: إنشاء تجارب رقمية لا تلبي احتياجات عملائنا فحسب، بل تتجاوز توقعاتهم وتقود نمو الأعمال الحقيقي.",
+                our_mission: "مهمتنا",
+                mission_text: "تمكين الشركات بحلول رقمية مبتكرة تقود النمو، وتحسن تجارب المستخدم، وتخلق مزايا تنافسية دائمة في السوق الرقمي.",
+                our_vision: "رؤيتنا",
+                vision_text: "أن نكون الشريك الرائد في التحول الرقمي، معترف به لتقديم نتائج استثنائية وريادة مستقبل تقنيات الويب والهاتف المحمول.",
+                our_values: "قيمنا الأساسية",
+                values_description: "المبادئ التي توجه كل ما نقوم به وتحدد هويتنا كشركة",
+                innovation: "الابتكار",
+                innovation_desc: "ندفع الحدود باستمرار ونتبنى التقنيات الجديدة لتقديم حلول متطورة تحافظ على عملائنا في المقدمة.",
+                excellence: "التميز",
+                excellence_desc: "نحافظ على أعلى المعايير في كل ما نقوم به، من جودة الكود إلى خدمة العملاء، مما يضمن نتائج استثنائية في كل مرة.",
+                collaboration: "التعاون",
+                collaboration_desc: "نؤمن بالعمل عن كثب مع عملائنا كشركاء، وتعزيز التواصل المفتوح والنجاح المشترك.",
+                reliability: "الموثوقية",
+                reliability_desc: "يثق عملاؤنا بنا للتسليم في الوقت المحدد، ضمن الميزانية، وبالجودة التي يتوقعونها. لا نساوم أبداً على التزاماتنا.",
+                growth: "النمو",
+                growth_desc: "ملتزمون بالتعلم المستمر والتحسين، سواء لفريقنا أو لأعمال عملائنا.",
+                passion: "الشغف",
+                passion_desc: "نحب ما نقوم به، وهذا الشغف يدفعنا لإنشاء تجارب رقمية استثنائية تحدث فرقاً حقيقياً.",
+                our_journey: "رحلتنا",
+                journey_description: "المعالم الرئيسية التي شكلت نمو الشركة ونجاحها",
+                year_2020: "2020",
+                founding: "تأسيس الشركة",
+                founding_desc: "تم تأسيس LNC TECHNOLOGIE برؤية لتقديم حلول ويب وهاتف محمول مبتكرة للشركات من جميع الأحجام.",
+                year_2021: "2021",
+                first_major_client: "أول عميل كبير",
+                first_client_desc: "نجحنا في تسليم أول مشروع على مستوى المؤسسة، مما رسخ سمعتنا للجودة والموثوقية في السوق.",
+                year_2022: "2022",
+                team_expansion: "توسع الفريق",
+                team_expansion_desc: "ضاعفنا حجم فريقنا ووسعنا عروض خدماتنا لتشمل حلول السحابة والتسويق الرقمي.",
+                year_2023: "2023",
+                international_reach: "الوصول الدولي",
+                international_desc: "وسعنا خدماتنا دولياً، والعمل مع العملاء عبر عدة بلدان ومناطق زمنية.",
+                year_2024: "2024",
+                innovation_lab: "مختبر الابتكار",
+                innovation_lab_desc: "أطلقنا مختبر الابتكار الذي يركز على تكامل الذكاء الاصطناعي والتقنيات الناشئة للبقاء متقدمين على اتجاهات الصناعة.",
+                projects_completed: "المشاريع المكتملة",
+                happy_clients: "عملاء سعداء",
+                years_experience: "سنوات الخبرة",
+                awards_won: "جوائز محققة",
+                meet_our_team: "تعرف على فريقنا",
+                team_description: "المهنيون الموهوبون الذين يجعلون نجاحنا ممكناً",
+                ceo_name: "نديم بن بوعزيز",
+                ceo_title: "مسوق رقمي ومؤسس",
+                ceo_bio: "قائد رؤيوي مع أكثر من 5 سنوات من الخبرة في التسويق الرقمي وتطوير الأعمال. شغوف بمساعدة الشركات على النمو من خلال استراتيجيات رقمية مبتكرة.",
+                cto_name: "يوب لؤي",
+                cto_title: "مطور الواجهة الأمامية",
+                cto_bio: "مطور واجهة أمامية مبدع متخصص في تقنيات الويب الحديثة وتصميم تجربة المستخدم. خبير في React و Vue.js ومبادئ التصميم المتجاوب.",
+                designer_name: "عبد اللطيف يوب",
+                designer_title: "مطور الواجهة الخلفية",
+                designer_bio: "مطور واجهة خلفية ذو خبرة مع خبرة في تقنيات الخادم وتصميم قواعد البيانات وتطوير واجهات برمجة التطبيقات. شغوف ببناء حلول قابلة للتطوير وآمنة.",
+                ready_to_work: "مستعد للعمل معنا؟",
+                cta_description: "لنناقش كيف يمكننا مساعدتك في إحياء رؤيتك الرقمية بخبرتنا وشغفنا للابتكار.",
+                start_project: "ابدأ مشروعك",
+                view_portfolio: "اعرض أعمالنا",
+                web_development: "تطوير المواقع",
+                mobile_apps: "تطبيقات الهاتف المحمول",
+                ui_ux_design: "تصميم واجهة المستخدم",
+                ecommerce: "التجارة الإلكترونية",
+                company: "الشركة",
+                support: "الدعم",
+                connect: "تواصل",
+                help_center: "مركز المساعدة",
+                documentation: "التوثيق",
+                privacy_policy: "سياسة الخصوصية",
+                terms_service: "شروط الخدمة",
+                all_rights_reserved: "جميع الحقوق محفوظة."
+            }
+        };
+
+        let currentLang = 'en';
+        let currentTheme = 'light';
+
+        // Language switching
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            updateLanguageDisplay();
+            updateContent();
+            toggleLanguageDropdown();
+            
+            // Update direction for Arabic
+            const html = document.documentElement;
+            if (lang === 'ar') {
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', lang);
+            }
+        }
+
+        function updateLanguageDisplay() {
+            const langFlags = {
+                'en': '🇺🇸 EN',
+                'fr': '🇫🇷 FR',
+                'ar': '🇩🇿 AR'
+            };
+            document.getElementById('current-lang').textContent = langFlags[currentLang];
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`[onclick="changeLanguage('${currentLang}')"]`).classList.add('active');
+        }
+
+        function updateContent() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    if (element.tagName === 'INPUT' && element.type !== 'submit') {
+                        element.placeholder = translations[currentLang][key];
+                    } else {
+                        element.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // Theme switching
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.classList.toggle('dark-mode');
+            
+            const themeIcon = document.getElementById('theme-icon');
+            if (currentTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        const increment = target / 200;
+                        let current = 0;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            counter.textContent = Math.floor(current);
+                        }, 10);
+                        
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        }
+
+        // Header scroll effect
+        function handleScroll() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        function setupSmoothScrolling() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu if open
+                        const navMenu = document.getElementById('nav-menu');
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupScrollAnimations() {
+            const animationObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Animate sections
+            const animatedElements = document.querySelectorAll('.value-item, .team-member, .timeline-item, .mission-card, .vision-card');
+            animatedElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                animationObserver.observe(el);
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup event listeners
+            window.addEventListener('scroll', handleScroll);
+            
+            // Setup smooth scrolling
+            setupSmoothScrolling();
+            
+            // Setup animations
+            setupScrollAnimations();
+            animateCounters();
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const languageSwitcher = document.querySelector('.language-switcher');
+                const dropdown = document.getElementById('lang-dropdown');
+                
+                if (!languageSwitcher.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+            
+            // Initialize language display
+            updateLanguageDisplay();
+        });
+
+        // Add parallax effect to hero section
+        function addParallaxEffect() {
+            const hero = document.querySelector('.page-hero');
+            if (hero) {
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    const rate = scrolled * -0.5;
+                    hero.style.transform = `translateY(${rate}px)`;
+                });
+            }
+        }
+
+        // Add typing effect (optional)
+        function addTypingEffect() {
+            const heroTitle = document.querySelector('.page-hero h1');
+            if (heroTitle) {
+                const text = heroTitle.textContent;
+                heroTitle.textContent = '';
+                let i = 0;
+                
+                function typeWriter() {
+                    if (i < text.length) {
+                        heroTitle.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 50);
+                    }
+                }
+                
+                setTimeout(typeWriter, 500);
+            }
+        }
+
+        // Enhanced hover effects for team members
+        function setupTeamHoverEffects() {
+            const teamMembers = document.querySelectorAll('.team-member');
+            teamMembers.forEach(member => {
+                member.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-15px) scale(1.02)';
+                });
+                
+                member.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        }
+
+        // Call additional setup functions
+        document.addEventListener('DOMContentLoaded', function() {
+            setupTeamHoverEffects();
+            // addParallaxEffect(); // Uncomment if you want parallax effect
+            // addTypingEffect(); // Uncomment if you want typing effect
+        });
+    </script>
+</body>
+</html>
